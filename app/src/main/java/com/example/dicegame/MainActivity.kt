@@ -31,6 +31,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,20 +56,32 @@ fun GUI() {
     var pointsInput by remember { mutableStateOf("101") }
 
     Column (
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        modifier = Modifier.fillMaxSize()
+            .padding(top = 200.dp),
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        Image(
+            painter = painterResource(id = R.drawable.dicepic), //added the dice roll image
+            contentDescription = "Image description",
+            modifier = Modifier
+                .size(250.dp)
+                .padding(2.dp)
+        )
+
+
         Text("Welcome to the Dice game",
-            fontSize = 25.sp)
+            fontSize = 27.sp,
+            fontWeight = FontWeight .Bold
+            )
         // Get the current context
         val context = LocalContext.current
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = {
-            val i = Intent(context, NewGame::class.java)
-            i.putExtra("TARGET_POINTS", targetPoints)
+            val i = Intent(context, NewGame::class.java)  //new intent that navigates to the newgame activity
+            i.putExtra("Target_Points", targetPoints) //it passes the targetPoints variable as an extra parameter called "Target_Points"
             context.startActivity(i)
         }) {
             Text("New game")
@@ -87,7 +104,7 @@ fun GUI() {
     }
 
     // About Dialog
-    if (openAboutDialog) {
+    if (openAboutDialog) {   //referred to the lecture slides
         AlertDialog(
             icon = {
                 Icon(Icons.Default.Info, contentDescription = "Example Icon")
